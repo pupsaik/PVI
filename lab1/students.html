@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Students</title>
+        <link rel="stylesheet" href="css/styles.css">
+        <link rel="stylesheet" href="css/students.css">
+    </head>
+
+    <body>
+        <div id="header"></div>
+
+        <div class="main-container">
+            <div class="sidebar" id="sidebar"></div>
+            <main>
+                <h1 class="page-title">Students</h1>
+                <button class="add-button" onclick="openAddStudentModal()">+</button>
+                
+                <div id="add-student-modal" class="add-student-modal">
+                    <div class="add-student-modal-content">
+                        <button class="modal-close-button" onclick="closeAddStudentModal()"></button>
+                        <h2>Add student</h2>
+                        <hr>
+                        <form class="form">
+                            <div class="form-group">
+                                <label>Group</label>
+                                <select>
+                                    <option>PZ-21</option>
+                                    <option>PZ-22</option>
+                                    <option>PZ-23</option>
+                                    <option>PZ-24</option>
+                                    <option>PZ-25</option>
+                                    <option>PZ-26</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>First name</label>
+                                <input type="text">
+                            </div>
+                            <div class="form-group">
+                                <label>Last name</label>
+                                <input type="text">
+                            </div>
+                            <div class="form-group">
+                                <label>Gender</label>
+                                <select>
+                                    <option>M</option>
+                                    <option>F</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Birthday</label>
+                                <input type="date">
+                            </div>
+                        </form>
+                        <hr>
+                        <div class="buttons">
+                            <button class="ok-button">Ok</button>
+                            <button class="create-button">Create</button>
+                        </div>
+                    </div>
+                </div>
+
+                <table>
+                    <colgroup>
+                        <col style="width: 7%">
+                        <col style="width: 10%">
+                        <col style="width: 30%">
+                        <col style="width: 10%">
+                        <col style="width: 15%">
+                        <col style="width: 10%">
+                        <col style="width: 15%">
+                    </colgroup>
+
+                    <tr>
+                        <th><input type="checkbox"></th>
+                        <th>Group</th>
+                        <th>Name</th>
+                        <th>Gender</th>
+                        <th>Birthday</th>
+                        <th>Status</th>
+                        <th>Options</th>
+                    </tr>
+
+                    <tr>
+                        <td><input type="checkbox"></td>
+                        <td>PZ-25</td>
+                        <td>Ivan Oliynyk</td>
+                        <td>M</td>
+                        <td>02.01.2006</td>
+                        <td><img src="assets/images/online.png" class="status-icon"></td>
+                        <td>
+                            <button class="edit-button options-button"></button>
+                            <button class="delete-button options-button"></button>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td><input type="checkbox"></td>
+                        <td>PZ-23</td>
+                        <td>Olena Sitnikova</td>
+                        <td>F</td>
+                        <td>07.03.2006</td>
+                        <td><img src="assets/images/offline.png" class="status-icon"></td>
+                        <td></td>
+                    </tr>
+
+                    <tr>
+                        <td><input type="checkbox"></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+
+                    <tr>
+                        <td><input type="checkbox"></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                </table>
+            </main>
+        </div>
+
+        <script src="js/script.js" type="module"></script>
+        <script src="js/addstudent.js"></script>
+    </body>
+
+</html>

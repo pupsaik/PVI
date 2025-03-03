@@ -1,0 +1,121 @@
+header {
+    background-color: #9b9b9b;
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    justify-content: space-between;
+}
+
+.app-name {
+    color: white;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.header-right {
+    display: flex;
+    align-items: center;
+}
+
+.notification-button {
+    position: relative;
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    background-size: cover;
+    height: 32px;
+    width: 32px;
+}
+
+.last-messages {
+    position: absolute;
+    visibility: hidden;
+    transform: translate(-40%, -10%);
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+
+.notification:hover .last-messages {
+    visibility: visible;
+    opacity: 1;
+}
+
+ul {
+    border: 1px solid black;
+    border-radius: 10px;
+    list-style: none;
+    background-color: white;
+    padding: 0;
+}
+
+li {
+    width: 150px;
+    padding: 5px;
+    display: flex;
+    cursor: pointer;
+}
+
+.user-icon {
+    height: 50px;
+    width: 50px;
+    background-size: cover;
+}
+
+.message-content {
+    text-align: left;
+}
+
+.message-content p {
+    margin: 0;
+}
+
+.user-profile {
+    display: flex;
+    align-items: center;
+}
+
+.user-profile:hover .user-menu {
+    visibility: visible;
+    opacity: 1;
+}
+
+.user-menu {
+    position: absolute;
+    transform: translate(10%, 55%);
+    visibility: hidden;
+    opacity: 0;
+    transition: opacity 0.3s ease-in-out;
+}
+
+.user-menu a {
+    text-decoration: none;
+    color: black;
+}
+
+.user-button {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    background-image: url('/assets/images/user.png');
+    background-size: cover;
+    height: 32px;
+    width: 32px;
+    margin: 0 10px 0 20px;
+}
+
+.username {
+    color: white;;
+}
+
+@keyframes shake {
+    0% { transform: rotate(0deg); }
+    25% { transform: rotate(-10deg); }
+    50% { transform: rotate(10deg); }
+    75% { transform: rotate(-5deg); }
+    100% { transform: rotate(0deg); }
+}
+
+.notification-button:hover {
+    animation: shake 0.5s ease-in-out;
+}

@@ -1,0 +1,244 @@
+.main-container {
+    display: flex;
+}
+
+main {
+    width: 80%;
+    padding-right: 20px;
+}
+
+.sidebar {
+    width: 20%;
+}
+
+.app-name {
+    color: white;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.header-right {
+    display: flex;
+    align-items: center;
+}
+
+.notification-button {
+    position: relative;
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    background-size: cover;
+    height: 32px;
+    width: 32px;
+}
+
+.last-messages {
+    position: absolute;
+    visibility: hidden;
+    transform: translate(-40%, -10%);
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+
+.notification:hover .last-messages {
+    visibility: visible;
+    opacity: 1;
+}
+
+ul {
+    border: 1px solid black;
+    border-radius: 10px;
+    list-style: none;
+    background-color: white;
+    padding: 0;
+}
+
+li {
+    padding: 5px;
+    display: flex;
+    cursor: pointer;
+}
+
+.user-icon {
+    height: 50px;
+    width: 50px;
+    background-size: cover;
+}
+
+.message-content {
+    text-align: left;
+}
+
+.message-content p {
+    margin: 0;
+}
+
+
+.read-icon {
+    background-image: url('/assets/images/bell.png');
+}
+
+.not-read-icon {
+    background-image: url('/assets/images/bell-new.png');
+}
+
+.user-button {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    background-image: url('/assets/images/user.png');
+    background-size: cover;
+    height: 32px;
+    width: 32px;
+    margin: 0 10px 0 20px;
+}
+
+.username {
+    color: white;;
+}
+
+@keyframes shake {
+    0% { transform: rotate(0deg); }
+    25% { transform: rotate(-10deg); }
+    50% { transform: rotate(10deg); }
+    75% { transform: rotate(-5deg); }
+    100% { transform: rotate(0deg); }
+}
+
+.notification-button:hover {
+    animation: shake 0.5s ease-in-out;
+}
+
+.add-button {
+    float: right;
+    padding: 10px 15px;
+    background-color: transparent;
+    border: 1px solid black;
+    font-size: 16px;
+    margin-bottom: 10px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.add-button:hover {
+    background-color: lightgray;
+    color: white;
+}
+
+table {
+    width: 100%;
+}
+
+table, th, td {
+    border: 2px solid black;
+    border-collapse: collapse;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+th, td {
+    padding: 10px;
+    max-width: 200px;
+    text-align: center;
+    font-weight: bold;
+}
+
+th {
+    font-weight: normal;
+    font-size: 15px;
+}
+
+.options-button {
+    background-color: transparent;
+    width: 30px;
+    height: 30px;
+    background-position: center;
+    background-repeat: no-repeat;
+    transition: background-color 0.3s;
+}
+
+.options-button:hover {
+    background-color: lightgray;
+}
+
+.edit-button {
+    background-image: url('/assets/images/edit.png');
+    background-size: 25px;
+}
+
+.delete-button {
+    background-image: url('/assets/images/delete.png');
+    background-size: 40px;
+}
+
+.status-icon {
+    width: 20px;
+    height: 20px;
+    background-size: cover;
+}
+
+.add-student-modal {
+    position: fixed;
+    left: 0;
+    top: 0;
+    display: none;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+}
+
+.add-student-modal-content {
+    position: absolute;
+    left: 27%;
+    top: 20%;
+    width: 50%;
+    height: 50%;
+    background-color: white;
+    padding: 10px;
+}
+
+.modal-close-button {
+    float: right;
+    background-color: transparent;
+    border: 1px solid gray;
+    font-size: 30px;
+    font-weight: normal;
+    background-image: url('/assets/images/delete.png');
+    background-size: cover;
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
+}
+
+.form {
+    display: block;
+    margin: auto;
+    gap: 10px;
+    width: 40%;
+}
+
+.form-group {
+    display: flex;
+    justify-content: flex-end;
+    margin: 10px;
+}
+
+.form-group input,
+.form-group select {
+  padding: 5px;
+  width: 200px;
+  box-sizing: border-box;
+}
+
+.form-group label {
+    margin-right: 10px;
+}
+
+.add-student-modal-content .buttons {
+    float: right;
+}
+
+.add-student-modal-content .buttons button {
+    margin-left: 10px;
+    background-color: transparent;
+    border: 1px solid gray;
+}
