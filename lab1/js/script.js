@@ -1,11 +1,22 @@
 import { loadComponent } from "./ui.js";
 
+const tbody = document.getElementById("tableBody");
+
 document.addEventListener("DOMContentLoaded", async () =>  {
-    //Провантаження хедера і сайдбару
+    const width  = window.innerWidth || document.documentElement.clientWidth || 
+    document.body.clientWidth;
+    const height = window.innerHeight|| document.documentElement.clientHeight|| 
+    document.body.clientHeight;
+
+    console.log(width, height);    
+    //Завантаження хедеру і сайдбару
     await loadComponent("header", "components/header.html", "css/header.css");
     await loadComponent("sidebar", "components/sidebar.html", "css/sidebar.css");
 
-    //Перевірка, чи повідомлення прочитані
+    localStorage.setItem("username", "Yurii Stelmakh");
+    document.getElementById("username").textContent = localStorage.getItem("username");
+
+    //Індикатор повідомлень
     const button = document.getElementById("notification-button");
 
     if (!button) {
@@ -34,9 +45,11 @@ document.addEventListener("DOMContentLoaded", async () =>  {
         }
     });
 
-    let links = document.querySelectorAll(".sidebar .sidebar-links a");
-    console.log(links);
+
+    //Активний пункт меню
+    let links = document.querySelectorAll(".sidebar .sidebar-buttons a");
     let currentPath = window.location.pathname.split("/").pop();
+
     console.log(currentPath);
 
     links.forEach(link => {
@@ -45,4 +58,8 @@ document.addEventListener("DOMContentLoaded", async () =>  {
             link.classList.add("active");
         }
     });
+
+    loadTable();
+    attachButtonListeners();
 });
+

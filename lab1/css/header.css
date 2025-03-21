@@ -1,5 +1,5 @@
 header {
-    background-color: #9b9b9b;
+    background-color: #6f6d6d;
     display: flex;
     align-items: center;
     padding: 10px;
@@ -11,6 +11,7 @@ header {
     color: white;
     cursor: pointer;
     text-decoration: none;
+    font-size: 30px;
 }
 
 .header-right {
@@ -59,7 +60,6 @@ li {
 .user-icon {
     height: 50px;
     width: 50px;
-    background-size: cover;
 }
 
 .message-content {
@@ -73,6 +73,7 @@ li {
 .user-profile {
     display: flex;
     align-items: center;
+    background-size: cover;
 }
 
 .user-profile:hover .user-menu {
@@ -99,8 +100,8 @@ li {
     cursor: pointer;
     background-image: url('/assets/images/user.png');
     background-size: cover;
-    height: 32px;
-    width: 32px;
+    height: 37px;
+    width: 37px;
     margin: 0 10px 0 20px;
 }
 

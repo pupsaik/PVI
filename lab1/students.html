@@ -1,29 +1,33 @@
 <!DOCTYPE html>
-<html>
-    <head>
-        <title>Students</title>
-        <link rel="stylesheet" href="css/styles.css">
-        <link rel="stylesheet" href="css/students.css">
-    </head>
+<html lang="en">
 
-    <body>
-        <div id="header"></div>
+<head>
+    <title>Students</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/students.css">
+</head>
 
-        <div class="main-container">
-            <div class="sidebar" id="sidebar"></div>
-            <main>
+<body>
+    <div id="header"></div>
+
+    <div class="main-container">
+        <div class="sidebar" id="sidebar"></div>
+        <main>
+            <div class="title-row">
                 <h1 class="page-title">Students</h1>
-                <button class="add-button" onclick="openAddStudentModal()">+</button>
-                
-                <div id="add-student-modal" class="add-student-modal">
-                    <div class="add-student-modal-content">
-                        <button class="modal-close-button" onclick="closeAddStudentModal()"></button>
-                        <h2>Add student</h2>
-                        <hr>
-                        <form class="form">
+                <button class="add-button" onclick="openAddStudentModal()">+</button>    
+            </div>
+
+            <div id="add-student-modal" class="modal">
+                <div class="modal-content">
+                    <button class="modal-close-button" onclick="closeAddStudentModal()" aria-label="close-button"></button>
+                    <h2>Add student</h2>
+                    <hr>
+                    <form id="add-form" class="form">
+                        <div class="form-container">
                             <div class="form-group">
-                                <label>Group</label>
-                                <select>
+                                <label for="group-input">Group</label>
+                                <select id="group-input">
                                     <option>PZ-21</option>
                                     <option>PZ-22</option>
                                     <option>PZ-23</option>
@@ -33,102 +37,149 @@
                                 </select>
                             </div>
                             <div class="form-group">
-                                <label>First name</label>
-                                <input type="text">
+                                <label for="first-name-input">First name</label>
+                                <input id="first-name-input" type="text" required>
                             </div>
                             <div class="form-group">
-                                <label>Last name</label>
-                                <input type="text">
+                                <label for="last-name-input">Last name</label>
+                                <input id="last-name-input" type="text" required>
                             </div>
                             <div class="form-group">
-                                <label>Gender</label>
-                                <select>
+                                <label for="gender-input">Gender</label>
+                                <select id="gender-input">
                                     <option>M</option>
                                     <option>F</option>
                                 </select>
                             </div>
                             <div class="form-group">
-                                <label>Birthday</label>
-                                <input type="date">
+                                <label for="birthday-input">Birthday</label>
+                                <input id="birthday-input" type="date" required>
                             </div>
-                        </form>
+                        </div>
                         <hr>
                         <div class="buttons">
                             <button class="ok-button">Ok</button>
-                            <button class="create-button">Create</button>
+                            <button type="submit" class="create-button">Create</button>
                         </div>
+                    </form>
+                </div>
+            </div>
+
+            <div id="edit-student-modal" class="modal">
+                <div class="modal-content">
+                    <button class="modal-close-button" onclick="closeEditStudentModal()" aria-label="close-button"></button>
+                    <h2>Edit student</h2>
+                    <hr>
+                    <form id="edit-form" class="form">
+                        <div class="form-container">
+                            <div class="form-group">
+                                <label for="group-edit-input">Group</label>
+                                <select id="group-edit-input">
+                                    <option>PZ-21</option>
+                                    <option>PZ-22</option>
+                                    <option>PZ-23</option>
+                                    <option>PZ-24</option>
+                                    <option>PZ-25</option>
+                                    <option>PZ-26</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="first-name-edit-input">First name</label>
+                                <input id="first-name-edit-input" type="text" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="last-name-edit-input">Last name</label>
+                                <input id="last-name-edit-input" type="text" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="gender-edit-input">Gender</label>
+                                <select id="gender-edit-input">
+                                    <option>M</option>
+                                    <option>F</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="birthday-edit-input">Birthday</label>
+                                <input id="birthday-edit-input" type="date" required>
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="buttons">
+                            <button id="edit-button" class="create-button">Edit</button>
+                        </div>
+                    </form>
+                </div> 
+            </div>
+
+            <div id="delete-student" class="modal delete-modal">
+                <div class="modal-content">
+                    <button class="modal-close-button" aria-label="close-button"></button>
+                    <h2>Delete student</h2>
+                    <hr>
+                    <p class="modal-text"></p>
+                    <div class="buttons">
+                        <button class="ok-button">Ok</button>
+                        <button class="cancel-button">Cancel</button>
                     </div>
                 </div>
+            </div>
 
-                <table>
-                    <colgroup>
-                        <col style="width: 7%">
-                        <col style="width: 10%">
-                        <col style="width: 30%">
-                        <col style="width: 10%">
-                        <col style="width: 15%">
-                        <col style="width: 10%">
-                        <col style="width: 15%">
-                    </colgroup>
+            <table>
+                <colgroup>
+                    <col style="display: none;">
+                    <col style="width: 7%">
+                    <col style="width: 10%">
+                    <col style="width: 20%">
+                    <col style="width: 10%">
+                    <col style="width: 15%">
+                    <col style="width: 10%">
+                    <col style="width: 15%">
+                </colgroup>
 
-                    <tr>
-                        <th><input type="checkbox"></th>
-                        <th>Group</th>
-                        <th>Name</th>
-                        <th>Gender</th>
-                        <th>Birthday</th>
-                        <th>Status</th>
-                        <th>Options</th>
-                    </tr>
+                <tr>
+                    <th class="hidden-column">Id</th>
+                    <td><input id="general-checkbox" type="checkbox" aria-label="delete-checkbox"></td>
+                    <th>Group</th>
+                    <th>Name</th>
+                    <th>Gender</th>
+                    <th>Birthday</th>
+                    <th>Status</th>
+                    <th>Options</th>
+                </tr>
+                <tbody id="tableBody"></tbody>
+            </table>
 
-                    <tr>
-                        <td><input type="checkbox"></td>
-                        <td>PZ-25</td>
-                        <td>Ivan Oliynyk</td>
-                        <td>M</td>
-                        <td>02.01.2006</td>
-                        <td><img src="assets/images/online.png" class="status-icon"></td>
-                        <td>
-                            <button class="edit-button options-button"></button>
-                            <button class="delete-button options-button"></button>
-                        </td>
-                    </tr>
+            <template id="rowTemplate">
+                <tr>
+                    <td class="id hidden-column"></td>
+                    <td><input class="delete-checkbox" type="checkbox" aria-label="delete-checkbox"></td>
+                    <td class="group"></td>
+                    <td class="name"></td>
+                    <td class="gender"></td>
+                    <td class="birthday"></td>
+                    <td class="status"><img class="status-icon" src="/assets/images/offline.png" alt="offline"></td>
+                    <td class="options">
+                        <button class="edit-button options-button" aria-label="edit"></button>
+                        <button class="delete-button options-button" aria-label="delete"></button>
+                    </td>
+                </tr>
+            </template>
 
-                    <tr>
-                        <td><input type="checkbox"></td>
-                        <td>PZ-23</td>
-                        <td>Olena Sitnikova</td>
-                        <td>F</td>
-                        <td>07.03.2006</td>
-                        <td><img src="assets/images/offline.png" class="status-icon"></td>
-                        <td></td>
-                    </tr>
+            <div class="pagination-row">
+                <button class="pagination-button">&lt;</button>
+                <button class="pagination-button">1</button>
+                <button class="pagination-button">2</button>
+                <button class="pagination-button">3</button>
+                <button class="pagination-button">4</button>
+                <button class="pagination-button">5</button>
+                <button class="pagination-button">&gt;</button>
+            </div>
+        </main>
+    </div>
 
-                    <tr>
-                        <td><input type="checkbox"></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                    </tr>
-
-                    <tr>
-                        <td><input type="checkbox"></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                    </tr>
-                </table>
-            </main>
-        </div>
-
-        <script src="js/script.js" type="module"></script>
-        <script src="js/addstudent.js"></script>
-    </body>
+    <script src="js/script.js" type="module"></script>
+    <script src="js/table.js"></script>
+    <script src="js/students.js"></script>
+</body>
 
 </html>
