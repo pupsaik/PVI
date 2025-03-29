@@ -318,7 +318,7 @@ hr {
     }
 }
 
-@media (max-width: 576px) {
+@media (min-width: 450px) and (max-width: 576px) {
     tr, th, td {
         font-size: 14px;
         padding: 1px;
@@ -332,5 +332,45 @@ hr {
         font-size: 15px;
         width: 30px;
         height: 30px;
+    }
+}
+
+@media (max-width: 450px) {
+    .options-button {
+        height: 15px;
+        width: 10px;
+
+        background-size: 10px;
+    }
+
+    tr, th, td {
+        font-size: 8px;
+        padding: 0px;
+    }
+
+    .status-icon {
+        width: 10px;
+        height: 10px;
+        background-size: cover;
+    }
+
+    .sidebar {
+        width: 40px;
+    }
+
+    h1 {
+        font-size: 20px;
+    }
+
+    .add-button {
+        height: 30px;
+        padding: 10px;
+        line-height: 0px;
+    }
+
+    .pagination-button{
+        font-size: 10px;
+        height: 20px;
+        width: 20px;
     }
 }
