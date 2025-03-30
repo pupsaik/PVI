@@ -228,17 +228,27 @@ hr {
 .form-container {
     display: grid;
     gap: 15px;
+    margin: auto;
+    width: 100%;
 }
 
 .form-group {
     display: grid;
-    grid-template-columns: 1fr 2fr;
-    align-items: center;
+    grid-template-columns: 120px 1fr; /* Фіксована ширина для лейблів, гнучка для інпутів */
+    align-items: start;
     gap: 10px;
 }
 
+.input-container {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    width: 100%;
+}
+
 .form-group label {
-    text-align: left;
+    text-align: right;
+    padding-top: 1px;
 }
 
 .form-group input,
@@ -246,6 +256,7 @@ hr {
     padding: 5px;
     box-sizing: border-box;
     border: 1px solid gray;
+    width: 100%;
 }
 
 .buttons {
@@ -279,6 +290,19 @@ hr {
 
 .modal {
     display: none;
+}
+
+input.invalid {
+    border: 2px solid red;
+}
+
+.error-message {
+    display: none;
+    color: red;
+    font-size: 14px;
+    margin-top: 4px;
+    text-align: left;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 @media (max-width: 1200px) {

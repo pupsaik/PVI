@@ -1,7 +1,8 @@
 const tbody = document.getElementById("tableBody");
 const template = document.getElementById("rowTemplate");
+let isEditMode = false;
 let currentEditId = null;
-
+    
 function loadTable() {
 
     students.forEach(item => {
@@ -60,23 +61,8 @@ function attachButtonListeners() {
 
     document.querySelectorAll(".edit-button").forEach(button => {
         button.addEventListener("click", (event) => {
-            document.getElementById("edit-student-modal").style.display = "block";
-            const row = event.target.closest("tr");
-            const id = row.querySelector(".id").textContent.trim();
-            const student = students.find(s => s.id == parseInt(id));
-
-            if (!student) return;
-
-            currentEditId = student.id;
-            document.getElementById("group-edit-input").value = student.group;
-            document.getElementById("first-name-edit-input").value = student.name.split(" ")[0];
-            document.getElementById("last-name-edit-input").value = student.name.split(" ")[1];
-            document.getElementById("gender-edit-input").value = student.gender;
-            let dateParts = student.birthday.split(".");
-            if (dateParts.length === 3) {
-                student.birthday = `${dateParts[2]}-${dateParts[1]}-${dateParts[0]}`;
-            }
-            document.getElementById("birthday-edit-input").value = student.birthday;
+            let id = parseInt(event.target.closest("tr").querySelector(".id").textContent);
+            openStudentModal(true, students.find(s => s.id === id));
         });
     });
 
@@ -97,89 +83,222 @@ function deleteStudent(row) {
     }
 }
 
-function openAddStudentModal() {
-    document.getElementById("add-student-modal").style.display = "block";
+function openStudentModal(isEdit = false, student = null) {
+    document.querySelectorAll(".invalid").forEach(input => {
+        clearError(input);
+    });
+
+    const modal = document.getElementById("student-modal");
+    const title = document.getElementById("modal-title");
+    const submitButton = document.getElementById("submit-button");
+    const form = document.getElementById("student-form");
+
+    if (isEdit && student) {
+        isEditMode = true;
+        currentEditId = student.id;
+        title.textContent = "Edit student";
+        submitButton.textContent = "Edit";
+        document.getElementById("student-id").value = student.id;
+        document.getElementById("group-input").value = student.group;
+        document.getElementById("first-name-input").value = student.name.split(" ")[0];
+        document.getElementById("last-name-input").value = student.name.split(" ")[1];
+        document.getElementById("gender-input").value = student.gender;
+        document.getElementById("birthday-input").value = convertStringToDate(student.birthday);
+    } else {
+        title.textContent = "Add student";
+        submitButton.textContent = "Create";
+        form.reset();
+    }
+
+    modal.style.display = "block";
 }
 
-function closeAddStudentModal() {
-    document.getElementById("add-student-modal").style.display = "none";
+function closeStudentModal() {
+    document.getElementById("student-modal").style.display = "none";
 }
 
-function openEditStudentModal() {
-    document.getElementById("edit-student-modal").style.display = "block";
+document.querySelector(".add-button").addEventListener("click", () => openStudentModal(false));
+
+document.querySelectorAll(".edit-button").forEach(button => {
+    button.addEventListener("click", (event) => {
+        const studentRow = event.target.closest("tr");
+        const student = {
+            id: studentRow.querySelector(".id").textContent,
+            group: studentRow.querySelector(".group").textContent,
+            firstName: studentRow.querySelector(".name").textContent.split(" ")[0],
+            lastName: studentRow.querySelector(".name").textContent.split(" ")[1],
+            gender: studentRow.querySelector(".gender").textContent,
+            birthday: studentRow.querySelector(".birthday").textContent,
+        };
+        openStudentModal(true, student);
+    });
+});
+
+function showError(inputElement, errorMessage) {
+    inputElement.classList.add("invalid");
+    const inputContainer = inputElement.closest(".input-container");
+    const errorElement = inputContainer.querySelector(".error-message");
+    errorElement.style.display = "block";
+    errorElement.textContent = errorMessage;
 }
 
-function closeEditStudentModal() {
-    document.getElementById("edit-student-modal").style.display = "none";
+function clearError(inputElement) {
+    inputElement.classList.remove("invalid");
+    const inputContainer = inputElement.closest(".input-container");
+    const errorElement = inputContainer.querySelector(".error-message");
+    errorElement.style.display = "none";
+    errorElement.textContent = "";
 }
 
-document.getElementById("add-form").addEventListener("submit", (event) => {
+
+document.querySelector(".form").addEventListener("submit", (event) => {
     event.preventDefault();
-    const firstName = document.getElementById("first-name-input").value;
-    const secondName = document.getElementById("last-name-input").value;
+    let formIsValid = true;
+    
+    const id = document.getElementById("student-id").value;
     const group = document.getElementById("group-input").value;
+    const firstName = document.getElementById("first-name-input");
+    const lastName = document.getElementById("last-name-input");
     const gender = document.getElementById("gender-input").value;
-    const birthday = document.getElementById("birthday-input").value;
+    const birthday = document.getElementById("birthday-input");
+    
+    const nameSymbolQuantity = /^.{2,20}$/;
+    const nameSymbolsPattern = /^[A-Za-z.]+$/;
 
-    let newStudent = {
-        id: students.length + 1,
-        name: firstName + " " + secondName,
-        group,
-        gender,
-        birthday,
-        status: "active"
+    if (!nameSymbolQuantity.test(firstName.value)) {
+        showError(firstName, "First name must contain 2-20 characters.");
+        formIsValid = false;
+    } else if (!nameSymbolsPattern.test(firstName.value)) {
+        showError(firstName, "First name must contain only letters.");
+        formIsValid = false;
+    } else {
+        clearError(firstName);
+    }
+    
+    if (!nameSymbolQuantity.test(lastName.value)) {
+        showError(lastName, "Last name must contain 2-20 characters.");
+        formIsValid = false;
+    } else if (!nameSymbolsPattern.test(lastName.value)) {
+        showError(lastName, "Last name must contain only letters.");
+        formIsValid = false;
+    } else {
+        clearError(lastName);
     }
 
-    students.push(newStudent);
-    const row = template.content.cloneNode(true);
-    row.querySelector(".id").textContent = newStudent.id;
-    row.querySelector(".group").textContent = newStudent.group;
-    row.querySelector(".name").textContent = newStudent.name;
-    row.querySelector(".gender").textContent = newStudent.gender;
-    row.querySelector(".birthday").textContent = formatDate(newStudent.birthday);
-
-    tbody.appendChild(row);
-    closeAddStudentModal();
-    document.getElementById("add-form").reset();
-    attachButtonListeners();
-});
-
-document.querySelector(".ok-button").addEventListener("click", () => {
-    const firstName = document.getElementById("first-name-input").value;
-    const secondName = document.getElementById("last-name-input").value;
-    const group = document.getElementById("group-input").value;
-    const gender = document.getElementById("gender-input").value;
-    const birthday = document.getElementById("birthday-input").value;
-
-    if(firstName === "" || secondName === "" || birthday == "")
+    let year = parseInt(birthday.value.split("-")[0]);
+    if (year > 2015 || year < 2000)
     {
-        closeAddStudentModal();
-        document.getElementById("add-form").reset();
-        return;
+        showError(birthday, "Year must be between 2000 and 2015.");
+        formIsValid = false;
+        
+    } else {
+        clearError(birthday);    
     }
+    
+       
+    if (formIsValid) {
+        // Збираємо дані з форми
+        const firstName = document.getElementById("first-name-input").value;
+        const lastName = document.getElementById("last-name-input").value;
+        const fullName = `${firstName} ${lastName}`;
+        const group = document.getElementById("group-input").value;
+        const gender = document.getElementById("gender-input").value;
+        const birthday = document.getElementById("birthday-input").value;
+        
+        if (isEditMode && currentEditId !== null) {
+            // Режим редагування
+            updateStudent(currentEditId, {
+                name: fullName,
+                group,
+                gender,
+                birthday: formatDateForDisplay(birthday)
+            });
+        } else {
+            // Режим додавання
+            addNewStudent({
+                name: fullName,
+                group,
+                gender, 
+                birthday: formatDateForDisplay(birthday)
+            });
+        }
+        
+        // Закриваємо модальне вікно
+        document.getElementById("student-modal").style.display = "none";
+    }
+});
 
-    let newStudent = {
-        id: students.length + 1,
-        name: firstName + " " + secondName,
-        group,
-        gender,
-        birthday,
+function addNewStudent(studentData) {
+    // Створюємо новий об'єкт студента
+    const newStudent = {
+        id: students.length > 0 ? Math.max(...students.map(s => s.id)) + 1 : 1,
+        name: studentData.name,
+        group: studentData.group,
+        gender: studentData.gender,
+        birthday: studentData.birthday,
         status: "active"
-    }
-
+    };
+    
+    // Додаємо студента в масив даних
     students.push(newStudent);
+    
+    // Додаємо студента в таблицю
     const row = template.content.cloneNode(true);
     row.querySelector(".id").textContent = newStudent.id;
     row.querySelector(".group").textContent = newStudent.group;
     row.querySelector(".name").textContent = newStudent.name;
     row.querySelector(".gender").textContent = newStudent.gender;
-    row.querySelector(".birthday").textContent = formatDate(newStudent.birthday);
-
+    row.querySelector(".birthday").textContent = newStudent.birthday;
+    
+    // Встановлюємо статус онлайн, якщо це поточний користувач
+    if(newStudent.name === localStorage.getItem("username")) {
+        row.querySelector(".status-icon").src = "../assets/images/online.png";
+    }
+    
     tbody.appendChild(row);
-    closeAddStudentModal();
-    document.getElementById("add-form").reset();
+    
+    // Перепривʼязуємо обробники подій
     attachButtonListeners();
-});
+    
+    console.log("Added new student:", newStudent);
+}
+
+function updateStudent(id, studentData) {
+    // Знаходимо студента за ID
+    const studentIndex = students.findIndex(s => s.id === parseInt(id));
+    
+    if (studentIndex !== -1) {
+        // Зберігаємо поточний статус
+        const currentStatus = students[studentIndex].status;
+        
+        // Оновлюємо дані студента
+        students[studentIndex] = {
+            ...students[studentIndex], // зберігаємо існуючі поля
+            ...studentData, // перезаписуємо оновлені поля
+            status: currentStatus // зберігаємо поточний статус
+        };
+        
+        // Оновлюємо рядок в таблиці
+        const rows = document.querySelectorAll("#tableBody tr");
+        for (const row of rows) {
+            const rowId = parseInt(row.querySelector(".id").textContent);
+            if (rowId === parseInt(id)) {
+                row.querySelector(".group").textContent = studentData.group;
+                row.querySelector(".name").textContent = studentData.name;
+                row.querySelector(".gender").textContent = studentData.gender;
+                row.querySelector(".birthday").textContent = studentData.birthday;
+                break;
+            }
+        }
+        
+        console.log("Updated student:", students[studentIndex]);
+        // Скидаємо змінні режиму редагування
+        isEditMode = false;
+        currentEditId = null;
+    } else {
+        console.error("Student with ID", id, "not found");
+    }
+}
 
 document.getElementById("general-checkbox").addEventListener("click", function() {
     const checkboxes = document.querySelectorAll(".delete-checkbox");
@@ -195,33 +314,31 @@ document.getElementById("general-checkbox").addEventListener("click", function()
     }
 })
 
-document.getElementById("edit-button").addEventListener("click", (event) => {
-    event.preventDefault();
-
-    const group = document.getElementById("group-edit-input").value;
-    const firstName = document.getElementById("first-name-edit-input").value;
-    const lastName = document.getElementById("last-name-edit-input").value;
-    const birthday = document.getElementById("birthday-edit-input").value;
-    const gender = document.getElementById("gender-edit-input").value;
-    const student = students.find(s => s.id === currentEditId);
+function formatDateForDisplay(dateString) {
+    if (!dateString) return "";
     
-    student.group = group;
-    student.name = firstName + " " + lastName;
-    student.birthday = birthday;
+    try {
+        const date = new Date(dateString);
+        if (isNaN(date.getTime())) {
+            return dateString;
+        }
+        
+        const day = String(date.getDate()).padStart(2, '0');
+        const month = String(date.getMonth() + 1).padStart(2, '0');
+        const year = date.getFullYear();
+        return `${day}.${month}.${year}`;
+    } catch (error) {
+        console.error("Error formatting date:", error);
+        return dateString;
+    }
+}
 
-    const row = [...document.querySelectorAll(`#tableBody tr`)].find(tr => tr.querySelector(".id").textContent == currentEditId);
-    row.querySelector(".group").textContent = group;
-    row.querySelector(".name").textContent = student.name;
-    row.querySelector(".birthday").textContent = formatDate(birthday);
-    row.querySelector(".gender").textContent = gender;
-    closeEditStudentModal();
+function convertStringToDate(date) {
+    console.log(date)
+    const parts = date.split(".");
+    if (parts.length !== 3) return "";
+        const formattedDate = new Date(parseInt(parts[2]), parseInt(parts[1]), parseInt(parts[0]));
     
-})
-
-function formatDate(date) {
-    const d = new Date(date);
-    const day = String(d.getDate()).padStart(2, '0');
-    const month = String(d.getMonth() + 1).padStart(2, '0');
-    const year = d.getFullYear();
-    return `${day}.${month}.${year}`;
+    console.log(formattedDate);
+    return formattedDate.toISOString().split("T")[0];
 }

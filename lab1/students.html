@@ -6,6 +6,7 @@
     <link rel="stylesheet" href="css/styles.css">
     <link rel="stylesheet" href="css/students.css">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="manifest" href="mainfest.json">
 </head>
 
 <body>
@@ -16,102 +17,71 @@
         <main>
             <div class="title-row">
                 <h1 class="page-title">Students</h1>
-                <button class="add-button" onclick="openAddStudentModal()">+</button>    
+                <button class="add-button" onclick="openStudentModal()">+</button>    
             </div>
 
-            <div id="add-student-modal" class="modal">
+            <div id="student-modal" class="modal">
                 <div class="modal-content">
-                    <button class="modal-close-button" onclick="closeAddStudentModal()" aria-label="close-button"></button>
-                    <h2>Add student</h2>
+                    <button class="modal-close-button" onclick="closeStudentModal()" aria-label="close-button"></button>
+                    <h2 id="modal-title">Add student</h2>
                     <hr>
-                    <form id="add-form" class="form">
+                    <form id="student-form" class="form">
                         <div class="form-container">
+                            <input type="hidden" id="student-id">
                             <div class="form-group">
                                 <label for="group-input">Group</label>
-                                <select id="group-input">
-                                    <option>PZ-21</option>
-                                    <option>PZ-22</option>
-                                    <option>PZ-23</option>
-                                    <option>PZ-24</option>
-                                    <option>PZ-25</option>
-                                    <option>PZ-26</option>
-                                </select>
+                                <div class="input-container">
+                                    <select id="group-input">
+                                        <option>PZ-21</option>
+                                        <option>PZ-22</option>
+                                        <option>PZ-23</option>
+                                        <option>PZ-24</option>
+                                        <option>PZ-25</option>
+                                        <option>PZ-26</option>
+                                    </select>
+                                    <span class="error-message"></span>
+                                </div>
                             </div>
                             <div class="form-group">
                                 <label for="first-name-input">First name</label>
-                                <input id="first-name-input" type="text" required>
+                                <div class="input-container">
+                                    <input id="first-name-input" type="text" required>
+                                    <span class="error-message"></span>
+                                </div>
                             </div>
                             <div class="form-group">
                                 <label for="last-name-input">Last name</label>
-                                <input id="last-name-input" type="text" required>
+                                <div class="input-container">
+                                    <input id="last-name-input" type="text" required>
+                                    <span class="error-message"></span>
+                                </div>
                             </div>
                             <div class="form-group">
                                 <label for="gender-input">Gender</label>
-                                <select id="gender-input">
-                                    <option>M</option>
-                                    <option>F</option>
-                                </select>
+                                <div class="input-container">
+                                    <select id="gender-input">
+                                        <option>M</option>
+                                        <option>F</option>
+                                    </select>
+                                    <span class="error-message"></span>
+                                </div>
                             </div>
                             <div class="form-group">
                                 <label for="birthday-input">Birthday</label>
-                                <input id="birthday-input" type="date" required>
+                                <div class="input-container">
+                                    <input id="birthday-input" type="date" required>
+                                    <span class="error-message"></span>
+                                </div>
                             </div>
                         </div>
                         <hr>
                         <div class="buttons">
-                            <button class="ok-button">Ok</button>
-                            <button type="submit" class="create-button">Create</button>
+                            <button type="submit" id="submit-button" class="create-button">Create</button>
                         </div>
                     </form>
                 </div>
             </div>
-
-            <div id="edit-student-modal" class="modal">
-                <div class="modal-content">
-                    <button class="modal-close-button" onclick="closeEditStudentModal()" aria-label="close-button"></button>
-                    <h2>Edit student</h2>
-                    <hr>
-                    <form id="edit-form" class="form">
-                        <div class="form-container">
-                            <div class="form-group">
-                                <label for="group-edit-input">Group</label>
-                                <select id="group-edit-input">
-                                    <option>PZ-21</option>
-                                    <option>PZ-22</option>
-                                    <option>PZ-23</option>
-                                    <option>PZ-24</option>
-                                    <option>PZ-25</option>
-                                    <option>PZ-26</option>
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <label for="first-name-edit-input">First name</label>
-                                <input id="first-name-edit-input" type="text" required>
-                            </div>
-                            <div class="form-group">
-                                <label for="last-name-edit-input">Last name</label>
-                                <input id="last-name-edit-input" type="text" required>
-                            </div>
-                            <div class="form-group">
-                                <label for="gender-edit-input">Gender</label>
-                                <select id="gender-edit-input">
-                                    <option>M</option>
-                                    <option>F</option>
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <label for="birthday-edit-input">Birthday</label>
-                                <input id="birthday-edit-input" type="date" required>
-                            </div>
-                        </div>
-                        <hr>
-                        <div class="buttons">
-                            <button id="edit-button" class="create-button">Edit</button>
-                        </div>
-                    </form>
-                </div> 
-            </div>
-
+            
             <div id="delete-student" class="modal delete-modal">
                 <div class="modal-content">
                     <button class="modal-close-button" aria-label="close-button"></button>
@@ -138,7 +108,7 @@
                 </colgroup>
 
                 <tr>
-                    <th class="hidden-column">Id</th>
+                    <th class="hidden-column id">Id</th>
                     <td><input id="general-checkbox" type="checkbox" aria-label="delete-checkbox"></td>
                     <th>Group</th>
                     <th>Name</th>

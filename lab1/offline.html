@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Офлайн - Система управління студентами</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <style>
+        .offline-container {
+            text-align: center;
+            margin-top: 100px;
+        }
+        .offline-message {
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+        .offline-icon {
+            width: 150px;
+            height: 150px;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="offline-container">
+        <img class="offline-icon" src="assets/images/offline.png" alt="Offline">
+        <h1>Ви зараз офлайн</h1>
+        <p class="offline-message">Неможливо підключитися до сервера. Перевірте інтернет-з'єднання.</p>
+        <button onclick="window.location.reload()">Спробувати знову</button>
+    </div>
+</body>
+</html>
