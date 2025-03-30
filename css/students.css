@@ -69,7 +69,7 @@ li {
 
 
 .read-icon {
-    background-image: url('/assets/images/bell.png');
+    background-image: url('assets/images/bell.png');
 }
 
 .not-read-icon {
