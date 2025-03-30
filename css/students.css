@@ -69,18 +69,18 @@ li {
 
 
 .read-icon {
-    background-image: url('assets/images/bell.png');
+    background-image: url('/assets/images/bell.png');
 }
 
 .not-read-icon {
-    background-image: url('assets/images/bell-new.png');
+    background-image: url('/assets/images/bell-new.png');
 }
 
 .user-button {
     background-color: transparent;
     border: none;
     cursor: pointer;
-    background-image: url('assets/images/user.png');
+    background-image: url('/assets/images/user.png');
     background-size: cover;
     height: 32px;
     width: 32px;
@@ -165,12 +165,12 @@ th {
 }
 
 .edit-button {
-    background-image: url('assets/images/edit.png');
+    background-image: url('/assets/images/edit.png');
     background-size: 25px;
 }
 
 .delete-button {
-    background-image: url('assets/images/delete.png');
+    background-image: url('/assets/images/delete.png');
     background-size: 40px;
 }
 
