@@ -205,7 +205,7 @@ th {
     width: 30px;
     height: 30px;
     border: 1px solid gray;
-    background-image: url('assets/images/delete.png');
+    background-image: url('/assets/images/delete.png');
     background-size: cover;
     cursor: pointer;
 }
